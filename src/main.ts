@@ -1,8 +1,16 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { AppConfigService } from './config/config.service';
+import { appConfigModule } from './config/config.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const logger = new Logger('/Main');
+  const appConfigService:AppConfigService = app.get(AppConfigService)
+  await app.listen(appConfigService.port, '0.0.0.0',()=>{
+    logger.log(`API Corriendo en el puesto ${appConfigService.port}`)
+    console.log(`API Corriendo en el puesto ${appConfigService.port}`)
+  });
 }
 bootstrap();
