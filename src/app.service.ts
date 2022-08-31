@@ -17,15 +17,17 @@ export class AppService {
       appurl:this.appConfig.url
     }
   }
-
   getHello2(): string {
     return 'Hello World!';
   }
-
   async getAllUsers(): Promise<User[]>{
     return await this.userRepo.find(); 
   }
   async getUser(userId):Promise<User>{
     return await this.userRepo.findOne(userId);
   }
+  async createUser(name:string,address:string,email:string,age:number):Promise<User>{
+    return await this.userRepo.save({name,address,email,age});
+  }
+
 }
